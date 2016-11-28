@@ -3,6 +3,6 @@
     public class CreateParams
     {
         public string CreateMode { get; set; }
-        public byte[] Data { get; set; }
+        public string Data { get; set; }
     }
 }

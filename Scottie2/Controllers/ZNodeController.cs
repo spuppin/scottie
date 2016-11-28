@@ -5,52 +5,43 @@ using Scottie.Models;
 
 namespace Scottie.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("znode")]
     public class ZNodeController : Controller
     {
-          Good progress. This worked when I had a basic /get HttpGet action
-          NEXT: implement stub versions of the methods below.
-
-        public ZNodeController()
-        {
-            
-        }
         [HttpPost("{*path}")]
         public IActionResult Create(string path, [FromBody] CreateParams createParams)
-        {
-            throw new NotImplementedException();
-            //return Created("znode", "foo");
+        { 
+            return new ObjectResult(new {status="Created!", path, createParams});
         }
 
         [HttpPut("{*path}")]
         public IActionResult Update(string path, [FromBody] UpdateParams updateParams)
         {
-            throw new NotImplementedException();
-            //return Created("znode", "foo");
+            return new ObjectResult(new { status = "Updated!", path, updateParams });
         }
 
         [HttpDelete("{*path}")]
-        public IAsyncResult Delete(string path, [FromBody] DeleteParams deleteParams)
+        public IActionResult Delete(string path, [FromBody] DeleteParams deleteParams)
         {
-            throw new NotImplementedException();
+            return new ObjectResult(new { status = "Deleted!", path, deleteParams });
         }
 
         [HttpPost("multi")]
-        public IAsyncResult Multi([FromBody] List<MultiOpParams> multiParams)
+        public IActionResult Multi([FromBody] IEnumerable<MultiOpParams> multiParams)
         {
-            throw new NotImplementedException();
+            return new ObjectResult(new { status = "Multied!", multiParams });
         }
 
         [HttpGet("{*path}")]
-        public IAsyncResult Get(string path)
+        public IActionResult Get(string path)
         {
-            throw new NotImplementedException();
+            return new ObjectResult(new { status = "Getted!", path });
         }
 
         [HttpGet("children/{*path}")]
-        public IAsyncResult GetChildren(string path)
+        public IActionResult GetChildren(string path)
         {
-            throw new NotImplementedException();
+            return new ObjectResult(new { status = "Children getted!", path });
         }
     }
 }
