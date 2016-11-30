@@ -1,4 +1,4 @@
-﻿namespace Scottie.Models
+﻿namespace Scottie.Server
 {
     public class CreateParams
     {
