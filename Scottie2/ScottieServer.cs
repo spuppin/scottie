@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Scottie.Database;
 using Scottie.Server;
 
 namespace Scottie
@@ -27,6 +28,8 @@ namespace Scottie
         
         public IWebHost Start()
         {
+            ScottiesHole.CreateDatabase();
+
             var host = _hostBuilder.Build();
             host.Start();
             return host;

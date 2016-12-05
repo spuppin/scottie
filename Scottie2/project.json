@@ -1,11 +1,13 @@
 {
   "version": "1.0.0-*",
   "dependencies": {
+    "Dapper": "1.50.3-beta1",
     "Microsoft.AspNetCore.Hosting": "1.1.0",
     "Microsoft.AspNetCore.Hosting.Abstractions": "1.1.0",
     "Microsoft.AspNetCore.Http.Abstractions": "1.1.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
+    "Microsoft.Data.Sqlite": "1.1.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Filter": "1.0.0",
     "Microsoft.Extensions.Logging.TraceSource": "1.0.0",

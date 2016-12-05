@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Scottie.Database;
 using Scottie.Session;
 
 namespace Scottie.Server
@@ -7,11 +8,12 @@ namespace Scottie.Server
     [Route("session")]
     public class SessionController : Controller
     {
-        [HttpPost()]
+        [HttpPost]
         public IActionResult Create()
         {
-            var random = new Random();
-            return new ObjectResult(new SessionResult ("Created!",  (long)random.Next()));
+            long id = ScottiesHole.CreateSession();
+
+            return new ObjectResult(new SessionResult ("Created!", id));
         }
 
         [HttpPut("{sessionId}")]
@@ -23,7 +25,9 @@ namespace Scottie.Server
         [HttpDelete("{sessionId}")]
         public IActionResult Delete(long sessionId)
         {
-            return new ObjectResult(new { status = "Deleted!", sessionId });
+            ScottiesHole.DeleteSession(sessionId);
+
+            return new ObjectResult(new SessionResult("Deleted!", sessionId ));
         }
     }
 }

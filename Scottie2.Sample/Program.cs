@@ -16,6 +16,12 @@ namespace Scottie2.Sample
                 using (var client = new ScottieClient())
                 {
                     client.Connect();
+                    client.Disconnect();
+                }
+
+                using (var client = new ScottieClient())
+                {
+                    client.Connect();
                     string path = client.Create(@"/foo/bar", "my data", CreateMode.Ephemeral);
 
                     client.Update(path, "updated data", 1);
