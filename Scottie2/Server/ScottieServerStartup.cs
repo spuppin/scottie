@@ -20,8 +20,8 @@ namespace Scottie.Server
                 options.SingleApiVersion(new Info
                 {
                     Version = "v1",
-                    Title = "Geo Search API",
-                    Description = "A simple api to search using geo location in Elasticsearch",
+                    Title = "Scottie API",
+                    Description = "A RESTful API for Scottie",
                     TermsOfService = "None"
                 });
                 options.DescribeAllEnumsAsStrings();

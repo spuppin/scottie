@@ -9,14 +9,19 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Filter": "1.0.0",
     "Microsoft.Extensions.Logging.TraceSource": "1.0.0",
+    "Microsoft.Rest.ClientRuntime": "2.3.3",
     "NETStandard.Library": "1.6.1",
+    "NLog": "5.0.0-beta03",
     "Swashbuckle.SwaggerGen": "6.0.0-beta902",
     "Swashbuckle.SwaggerUi": "6.0.0-beta902",
-    "system.diagnostics.textwritertracelistener": "4.0.0-beta-23123"
+    "system.diagnostics.textwritertracelistener": "4.0.0-beta-23123",
+    "System.Runtime.Extensions": "4.3.0"
   },
   "frameworks": {
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": [
+        "dnxcore50"
+      ]
     }
   },
   "buildOptions": {

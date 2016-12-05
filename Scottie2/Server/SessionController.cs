@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Scottie.Session;
 
 namespace Scottie.Server
 {
     [Route("session")]
     public class SessionController : Controller
     {
-        [HttpPost("{sessionId}")]
-        public IActionResult Create(long sessionId)
-        { 
-            return new ObjectResult(new {status="Created!", sessionId});
+        [HttpPost()]
+        public IActionResult Create()
+        {
+            var random = new Random();
+            return new ObjectResult(new SessionResult ("Created!",  (long)random.Next()));
         }
 
         [HttpPut("{sessionId}")]
