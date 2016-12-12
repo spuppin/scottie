@@ -1,6 +1,6 @@
-﻿namespace Scottie.ZNode
+﻿namespace Scottie.Results
 {
-    public class DeleteResult
+    public class UpdateResult
     {
         public long Version { get; set; }
     }

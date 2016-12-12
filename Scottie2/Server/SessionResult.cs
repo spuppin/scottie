@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scottie.Session
+namespace Scottie.Server
 {
     public class SessionResult
     {

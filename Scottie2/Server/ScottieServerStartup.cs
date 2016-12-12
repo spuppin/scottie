@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Scottie.Database;
 using Swashbuckle.Swagger.Model;
 
 namespace Scottie.Server
@@ -15,6 +16,16 @@ namespace Scottie.Server
         {
             services.AddMvc();
             services.AddSwaggerGen();
+
+            const string dbName = "scottie.db";
+            ISessionStore sqlLiteSessionStore = new SqlLiteSessionStore(dbName);
+            INodeStore nodeStore = new SqlLiteNodeStore(dbName);
+
+            sqlLiteSessionStore.Init();
+            nodeStore.Init();
+            services.AddSingleton(sqlLiteSessionStore);
+            services.AddSingleton(nodeStore);
+
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info

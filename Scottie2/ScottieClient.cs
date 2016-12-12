@@ -7,9 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
+using Scottie.Results;
 using Scottie.Server;
-using Scottie.Session;
-using Scottie.ZNode;
 
 namespace Scottie
 {
@@ -46,7 +45,7 @@ namespace Scottie
         private readonly ILogger _logger;
         private readonly Uri _baseUri = new Uri("http://localhost:2323");
 
-        // All of these look like the should be in a class.
+        // All of these look like the should be in a separate class.
         private HttpClient _client;
         private long _sessionId;
         private CancellationTokenSource _heartbeatCancellation;
@@ -89,7 +88,7 @@ namespace Scottie
         public string Get(string path)
         {
             var result = Get<GetResult>($"znode/{_sessionId}/{path}");
-            return result.Path;
+            return result.Node.Path;
         }
 
         public IReadOnlyList<string> GetChildren(string path)

@@ -12,7 +12,7 @@ namespace Scottie
     public class ScottieServer : IScottieServer
     {
         private readonly IWebHostBuilder _hostBuilder;
-
+        
         public ScottieServer(IWebHostBuilder builder = null)
         {
             _hostBuilder = builder ?? DefaultWebHost();
@@ -28,9 +28,7 @@ namespace Scottie
         
         public IWebHost Start()
         {
-            ScottiesHole.CreateDatabase();
-
-            var host = _hostBuilder.Build();
+            IWebHost host = _hostBuilder.Build();
             host.Start();
             return host;
         }

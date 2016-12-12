@@ -1,4 +1,4 @@
-﻿namespace Scottie.ZNode
+﻿namespace Scottie.Results
 {
     public class MultiResult
     {
