@@ -1,29 +1,16 @@
-﻿using Microsoft.Data.Sqlite;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.Immutable;
-using System.IO;
+using System.Data;
 using System.Linq;
 using Dapper;
 
 namespace Scottie.Database
 {
-    public class SqlLiteSessionStore : ISessionStore
+    public class SqlLiteSessionStore : SqlLiteStore, ISessionStore
     {
-        private readonly string _dbFile;
-
         public SqlLiteSessionStore(string dbFile)
+            : base(dbFile)
         {
-            if (dbFile == null) throw new ArgumentNullException(nameof(dbFile));
-
-            _dbFile = dbFile;
-        }
-        
-        public SqliteConnection SimpleDbConnection()
-        {
-            var connection = new SqliteConnectionStringBuilder { DataSource = _dbFile };
-
-            return new SqliteConnection(connection.ToString());
         }
 
         // not sure about the thread safety of this yet...
@@ -31,10 +18,9 @@ namespace Scottie.Database
 
         public void Init()
         {
-            string path = Path.Combine(AppContext.BaseDirectory, _dbFile);
-            if (File.Exists(path)) return;
-
-            using (var cnn = SimpleDbConnection())
+            if (DbExists()) return;
+                        
+            using (IDbConnection cnn = SimpleDbConnection())
             {
                 cnn.Open();
                 cnn.Execute(
@@ -50,7 +36,7 @@ namespace Scottie.Database
         {
             lock (LockObject)
             {
-                using (SqliteConnection cnn = SimpleDbConnection())
+                using (IDbConnection cnn = SimpleDbConnection())
                 {
                     DateTime lastHeartbeat = DateTime.UtcNow;
 
@@ -66,7 +52,7 @@ namespace Scottie.Database
 
         public void Heartbeat(long id)
         {
-            using (var cnn = SimpleDbConnection())
+            using (IDbConnection cnn = SimpleDbConnection())
             {
                 DateTime heartbeat = DateTime.UtcNow;
 
@@ -80,7 +66,7 @@ namespace Scottie.Database
         {
             lock (LockObject)
             {
-                using (var cnn = SimpleDbConnection())
+                using (IDbConnection cnn = SimpleDbConnection())
                 {
                     cnn.Execute(@"DELETE FROM Session WHERE ID = @id", new {id});
                 }
@@ -91,7 +77,7 @@ namespace Scottie.Database
         {
             lock (LockObject)
             {
-                using (SqliteConnection cnn = SimpleDbConnection())
+                using (IDbConnection cnn = SimpleDbConnection())
                 {
                     long exists = cnn.Query<long>(
                         @"SELECT ID FROM Session WHERE ID = @id", 
@@ -105,7 +91,7 @@ namespace Scottie.Database
         {
             lock (LockObject)
             {
-                using (SqliteConnection cnn = SimpleDbConnection())
+                using (IDbConnection cnn = SimpleDbConnection())
                 {
                     return cnn.Query<Session>(@"SELECT ID, LastHeartbeat FROM Session")
                         .ToImmutableList();

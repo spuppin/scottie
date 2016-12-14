@@ -1,24 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Data;
 using Scottie.Server;
+using Dapper;
 
 namespace Scottie.Database
 {
-    public class SqlLiteNodeStore : INodeStore
+    public class SqlLiteNodeStore : SqlLiteStore, INodeStore
     {
-        private readonly string _dbName;
-
-        public SqlLiteNodeStore(string dbName)
+        public SqlLiteNodeStore(string dbFile)
+            : base(dbFile)
         {
-            if (dbName == null) throw new ArgumentNullException(nameof(dbName));
-
-            _dbName = dbName;
         }
 
         public void Init()
         {
-            throw new NotImplementedException();
+            if (DbExists()) return;
+
+            using (IDbConnection cnn = SimpleDbConnection())
+            {
+                cnn.Open();
+                cnn.Execute(
+                    @"CREATE TABLE Znode
+              (
+                 ID                   INTEGER PRIMARY KEY AUTOINCREMENT,
+                 Parent               TEXT NOT NULL,
+                 Child                TEXT,
+                 EphemeralSessionId   INTEGER,
+                 Data                 TEXT,
+                 Version              INTEGER
+              )");
+            }
         }
 
         public string Create(string path, string createMode, string data)
