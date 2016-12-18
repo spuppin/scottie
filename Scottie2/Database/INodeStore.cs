@@ -8,7 +8,7 @@ namespace Scottie.Database
     {
         void Init();
 
-        string Create(string path, string createMode, string data);
+        string Create(long sessionId, string path, CreateMode createMode, string data);
         long Update(string path, string data, long version);
         bool Delete(string path, long version);
         void Multi(IEnumerable<MultiOpParams> operations);

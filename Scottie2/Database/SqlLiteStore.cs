@@ -23,10 +23,10 @@ namespace Scottie.Database
             return new SqliteConnection(connection.ToString());
         }
 
-        public bool DbExists()
-        {
-            string path = Path.Combine(AppContext.BaseDirectory, _dbFile);
-            return File.Exists(path);
-        }
+        //public bool DbExists()
+        //{
+        //    string path = Path.Combine(AppContext.BaseDirectory, _dbFile);
+        //    return File.Exists(path);
+        //}
     }
 }

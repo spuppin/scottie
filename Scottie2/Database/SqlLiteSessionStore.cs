@@ -16,18 +16,33 @@ namespace Scottie.Database
         // not sure about the thread safety of this yet...
         public static object LockObject = new object();
 
-        public void Init()
+        public bool TableExists()
         {
-            if (DbExists()) return;
-                        
             using (IDbConnection cnn = SimpleDbConnection())
             {
-                cnn.Open();
+                long id = cnn.Query<long>(
+                    "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = 'Session';")
+                    .FirstOrDefault();
+                if (id == 1)
+                    return true;
+            }
+            return false;
+        }
+
+        public void Init()
+        {
+            if (TableExists())
+                return;
+
+            using (IDbConnection cnn = SimpleDbConnection())
+            {
+                // Test if i need this open...
+              // cnn.Open();
                 cnn.Execute(
                     @"create table Session
               (
                  ID               integer primary key AUTOINCREMENT,
-                 LastHeartbeat     datetime not null,
+                 LastHeartbeat     datetime not null
               )");
             }
         }

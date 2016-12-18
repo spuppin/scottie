@@ -40,7 +40,7 @@ namespace Scottie.Server
         {
             if (!_sessions.Exists(sessionId)) return InvalidSession();
 
-            path = _nodes.Create(path, createParams.CreateMode, createParams.Data);
+            path = _nodes.Create(sessionId, path, createParams.GetMode(), createParams.Data);
 
             return new ObjectResult(new CreateResult {Path = path});
         }        
