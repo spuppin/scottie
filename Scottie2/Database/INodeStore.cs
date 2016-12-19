@@ -11,7 +11,7 @@ namespace Scottie.Database
         string Create(long sessionId, string path, CreateMode createMode, string data);
         long Update(string path, string data, long version);
         bool Delete(string path, long version);
-        void Multi(IEnumerable<MultiOpParams> operations);
+        void Multi(long sessionId, IEnumerable<MultiOpParams> operations);
         ZNode Get(string path);
         IImmutableList<string> GetChildren(string path);
     }

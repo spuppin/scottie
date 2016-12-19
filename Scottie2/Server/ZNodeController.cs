@@ -70,7 +70,7 @@ namespace Scottie.Server
         {
             if (!_sessions.Exists(sessionId)) return InvalidSession();
 
-            _nodes.Multi(multiParams);
+            _nodes.Multi(sessionId, multiParams);
 
             return new ObjectResult(new { status = "Multied!", sessionId });
         }
